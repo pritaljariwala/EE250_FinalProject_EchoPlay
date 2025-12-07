@@ -4,7 +4,10 @@ import grovepi
 import paho.mqtt.client as mqtt
 
 SOUND_SENSOR = 0
+VOLUME_SENSOR = 2 
 grovepi.pinMode(SOUND_SENSOR, "INPUT")
+grovepi.pinMode(VOLUME_SENSOR, "INPUT")
+
 
 BROKER_IP = "172.20.10.6"   # replace with YOUR laptop's or Pi's broker
 

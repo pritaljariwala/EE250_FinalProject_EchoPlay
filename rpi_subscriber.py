@@ -1,4 +1,3 @@
-# laptop_subscriber.py
 import paho.mqtt.client as mqtt
 import time
 from filters import moving_average
