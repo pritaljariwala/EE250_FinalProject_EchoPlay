@@ -1,7 +1,5 @@
 import paho.mqtt.client as mqtt
 import time
-import socket
-import threading
 from filters import moving_average
 from fft_processing import add_sample, compute_fft 
 from spotify_control import play_pause_toggle, skip_track
@@ -29,7 +27,7 @@ cooldown_until = 0.0
 # MQTT callback
 # =======================
 def on_message(client, userdata, msg):
-    global last_clap_time, raw_val, filtered, prev_filtered,filtered
+    global last_clap_time, raw_val, filtered, prev_filtered, filtered
     global state, noise_floor, energy, cooldown_until
 
     payload = msg.payload.decode()
