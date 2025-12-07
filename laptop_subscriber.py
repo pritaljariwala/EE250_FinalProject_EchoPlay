@@ -16,12 +16,11 @@ prev_filtered = 0.0
 noise_floor = 100.0
 NOISE_ALPHA = 0.1
 
-TCP_HOST = "172.20.10.7"  # Bind to all available network interfaces
+TCP_HOST = "0.0.0.0"  # Bind to all available network interfaces
 TCP_PORT = 65432   
 
 data_lock = threading.Lock()
 state = "Paused"
-
 
 
 def handle_client_connection(conn):
@@ -51,6 +50,8 @@ def start_tcp_server():
 
             # Handle the connection in a separate thread
             threading.Thread(target=handle_client_connection, args=(conn,)).start()
+
+
 
 def on_message(client, userdata, msg):
     global last_clap_time, filtered, raw_val,prev_filtered,state
