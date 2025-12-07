@@ -23,13 +23,13 @@ energy = 0
 state = "Paused"
 cooldown_until = 0.0
 
+
 # =======================
 # MQTT callback
 # =======================
 def on_message(client, userdata, msg):
     global last_clap_time, raw_val, filtered, prev_filtered, filtered
     global state, noise_floor, energy, cooldown_until
-
     payload = msg.payload.decode()
 
     try:

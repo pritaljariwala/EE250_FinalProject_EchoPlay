@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import time
-from laptop_subscriber import filtered, state
+import laptop_subscriber
 
 plt.ion()
 fig, ax = plt.subplots()
@@ -13,7 +13,7 @@ def plot_data():
 
         current_time = time.time()
         time_values.append(current_time)
-        filtered_values.append(filtered)
+        filtered_values.append(laptop_subscriber.filtered)
 
         ax.clear()
 
@@ -23,7 +23,7 @@ def plot_data():
         ax.set_ylabel("Filtered Value")
         ax.set_title("Real-time Sensor Data")
 
-        ax.text(0.05, 0.95, f"State: {state}", transform=ax.transAxes, fontsize=12, verticalalignment='top', color='red')
+        ax.text(0.05, 0.95, f"State: {laptop_subscriber.state}", transform=ax.transAxes, fontsize=12, verticalalignment='top', color='red')
 
         plt.draw()
         plt.pause(0.1)
