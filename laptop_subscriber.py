@@ -3,6 +3,8 @@ import time
 from filters import moving_average
 from fft_processing import add_sample, compute_fft 
 from spotify_control import play_pause_toggle, skip_track
+import threading
+import queue 
 
 # =======================
 # Detection parameters
@@ -27,7 +29,7 @@ cooldown_until = 0.0
 # =======================
 # MQTT callback
 # =======================
-def on_message(client, userdata, msg):
+def on_message(client, userdata, msg, data_queue):
     global last_clap_time, raw_val, filtered, prev_filtered, filtered
     global state, noise_floor, energy, cooldown_until
     payload = msg.payload.decode()
@@ -88,6 +90,8 @@ def on_message(client, userdata, msg):
 
     prev_filtered = filtered
 
+    data_queue.put((filtered, state))
+
 
 # =======================
 # MQTT STARTER
@@ -100,12 +104,15 @@ def start_mqtt():
     print("Connected to MQTT broker.")
     client.loop_start()
 
+def main(data_queue):
+    start_mqtt(data_queue)
+    print("Visualizer")
+    while True:
+        time.sleep(1)
 
 # =======================
 # MAIN
 # =======================
 if __name__ == "__main__":
-    start_mqtt()
-    print("Spotify Control Ready.")
-    while True:
-        time.sleep(1)
+    data_queue = queue.Queue()  # Create a queue for communication
+    threading.Thread(target=main, args=(data_queue,), daemon=True).start()
